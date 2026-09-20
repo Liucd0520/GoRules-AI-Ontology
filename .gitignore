@@ -4,5 +4,4 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-editor/ai-config.json
 *.log
