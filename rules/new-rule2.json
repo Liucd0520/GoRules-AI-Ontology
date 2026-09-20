@@ -1,0 +1,216 @@
+{
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "inputNode",
+      "name": "请求",
+      "position": {
+        "x": 60,
+        "y": 260
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "id": "table-1",
+      "type": "decisionTableNode",
+      "name": "高危企业标签判定表",
+      "position": {
+        "x": 380,
+        "y": 240
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "i1",
+            "name": "企业收入(万元)",
+            "field": "company.revenue"
+          },
+          {
+            "id": "i2",
+            "name": "环比变化率(%)",
+            "field": "company.momRate"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "o1",
+            "name": "风险标签",
+            "field": "riskLabel"
+          },
+          {
+            "id": "o2",
+            "name": "命中原因",
+            "field": "reason"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "i1": "> 100",
+            "i2": "<= -10",
+            "o1": "\"高危企业\"",
+            "o2": "\"收入超100万且环比下降超10%\""
+          },
+          {
+            "_id": "r2",
+            "i1": "> 50 and <= 100",
+            "i2": "<= -30",
+            "o1": "\"高危企业\"",
+            "o2": "\"收入50-100万且环比下降超30%\""
+          },
+          {
+            "_id": "r3",
+            "i1": "<= 50",
+            "i2": "<= -60",
+            "o1": "\"高危企业\"",
+            "o2": "\"收入低于50万且环比下降超60%\""
+          },
+          {
+            "_id": "r4",
+            "i1": "",
+            "i2": "",
+            "o1": "\"低危企业\"",
+            "o2": "\"未触发高危条件\""
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "switch-1",
+      "type": "switchNode",
+      "name": "按风险标签分流",
+      "position": {
+        "x": 720,
+        "y": 250
+      },
+      "content": {
+        "hitPolicy": "first",
+        "statements": [
+          {
+            "id": "s1",
+            "condition": "riskLabel == \"高危企业\"",
+            "isDefault": false
+          },
+          {
+            "id": "s2",
+            "condition": "",
+            "isDefault": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "expr-high",
+      "type": "expressionNode",
+      "name": "高危企业处置",
+      "position": {
+        "x": 1040,
+        "y": 140
+      },
+      "content": {
+        "expressions": [
+          {
+            "id": "ex1",
+            "key": "action",
+            "value": "\"列入重点监控名单\""
+          },
+          {
+            "id": "ex2",
+            "key": "riskLevel",
+            "value": "3"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "expr-low",
+      "type": "expressionNode",
+      "name": "低危企业处置",
+      "position": {
+        "x": 1040,
+        "y": 380
+      },
+      "content": {
+        "expressions": [
+          {
+            "id": "ex1",
+            "key": "action",
+            "value": "\"常规跟踪\""
+          },
+          {
+            "id": "ex2",
+            "key": "riskLevel",
+            "value": "1"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "outputNode",
+      "name": "响应",
+      "position": {
+        "x": 1360,
+        "y": 260
+      },
+      "content": {
+        "schema": ""
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "type": "edge",
+      "sourceId": "input-1",
+      "targetId": "table-1"
+    },
+    {
+      "id": "e2",
+      "type": "edge",
+      "sourceId": "table-1",
+      "targetId": "switch-1"
+    },
+    {
+      "id": "e3",
+      "type": "edge",
+      "sourceId": "switch-1",
+      "targetId": "expr-high",
+      "sourceHandle": "s1"
+    },
+    {
+      "id": "e4",
+      "type": "edge",
+      "sourceId": "switch-1",
+      "targetId": "expr-low",
+      "sourceHandle": "s2"
+    },
+    {
+      "id": "e5",
+      "type": "edge",
+      "sourceId": "expr-high",
+      "targetId": "output-1"
+    },
+    {
+      "id": "e6",
+      "type": "edge",
+      "sourceId": "expr-low",
+      "targetId": "output-1"
+    }
+  ]
+}

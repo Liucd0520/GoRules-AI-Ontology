@@ -1,0 +1,204 @@
+{
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "inputNode",
+      "name": "请求",
+      "position": {
+        "x": 60,
+        "y": 260
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "id": "table-1",
+      "type": "decisionTableNode",
+      "name": "客户评分表",
+      "position": {
+        "x": 340,
+        "y": 220
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "i1",
+            "name": "会员年限",
+            "field": "customer.years"
+          },
+          {
+            "id": "i2",
+            "name": "月消费额",
+            "field": "customer.monthlySpend"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "o1",
+            "name": "基础分",
+            "field": "score"
+          },
+          {
+            "id": "o2",
+            "name": "客户等级",
+            "field": "level"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "i1": ">= 5",
+            "i2": ">= 2000",
+            "o1": "90",
+            "o2": "\"gold\""
+          },
+          {
+            "_id": "r2",
+            "i1": ">= 3",
+            "i2": ">= 1000",
+            "o1": "75",
+            "o2": "\"silver\""
+          },
+          {
+            "_id": "r3",
+            "i1": "",
+            "i2": "",
+            "o1": "50",
+            "o2": "\"normal\""
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "switch-1",
+      "type": "switchNode",
+      "name": "按等级分流",
+      "position": {
+        "x": 640,
+        "y": 240
+      },
+      "content": {
+        "hitPolicy": "first",
+        "statements": [
+          {
+            "id": "s1",
+            "condition": "level == \"gold\" or level == \"silver\"",
+            "isDefault": false
+          },
+          {
+            "id": "s2",
+            "condition": "",
+            "isDefault": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "expr-high",
+      "type": "expressionNode",
+      "name": "优质客户权益",
+      "position": {
+        "x": 920,
+        "y": 120
+      },
+      "content": {
+        "expressions": [
+          {
+            "id": "ex1",
+            "key": "coupon",
+            "value": "level == \"gold\" ? \"满300减50券\" : \"满200减20券\""
+          },
+          {
+            "id": "ex2",
+            "key": "score",
+            "value": "score + 5"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "expr-normal",
+      "type": "expressionNode",
+      "name": "普通客户权益",
+      "position": {
+        "x": 920,
+        "y": 380
+      },
+      "content": {
+        "expressions": [
+          {
+            "id": "ex1",
+            "key": "coupon",
+            "value": "\"新客立减10元券\""
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "outputNode",
+      "name": "响应",
+      "position": {
+        "x": 1220,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "type": "edge",
+      "sourceId": "input-1",
+      "targetId": "table-1"
+    },
+    {
+      "id": "e2",
+      "type": "edge",
+      "sourceId": "table-1",
+      "targetId": "switch-1"
+    },
+    {
+      "id": "e3",
+      "type": "edge",
+      "sourceId": "switch-1",
+      "targetId": "expr-high",
+      "sourceHandle": "s1"
+    },
+    {
+      "id": "e4",
+      "type": "edge",
+      "sourceId": "switch-1",
+      "targetId": "expr-normal",
+      "sourceHandle": "s2"
+    },
+    {
+      "id": "e5",
+      "type": "edge",
+      "sourceId": "expr-high",
+      "targetId": "output-1"
+    },
+    {
+      "id": "e6",
+      "type": "edge",
+      "sourceId": "expr-normal",
+      "targetId": "output-1"
+    }
+  ]
+}

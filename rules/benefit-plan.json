@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "inputNode",
+      "name": "请求",
+      "position": {
+        "x": 60,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "id": "sub-1",
+      "type": "decisionNode",
+      "name": "调用客户评分",
+      "position": {
+        "x": 360,
+        "y": 250
+      },
+      "content": {
+        "key": "customer-score.json"
+      }
+    },
+    {
+      "id": "expr-1",
+      "type": "expressionNode",
+      "name": "权益判定",
+      "position": {
+        "x": 680,
+        "y": 250
+      },
+      "content": {
+        "expressions": [
+          {
+            "id": "ex1",
+            "key": "benefit",
+            "value": "level == \"gold\" ? \"专属客服+优先发货\" : \"普通服务\""
+          },
+          {
+            "id": "ex2",
+            "key": "benefitText",
+            "value": "\"客户等级: \" + level + \", 积分: \" + string(score) + \", 权益: \" + (level == \"gold\" ? \"专属客服+优先发货\" : \"普通服务\")"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "outputNode",
+      "name": "响应",
+      "position": {
+        "x": 1020,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "type": "edge",
+      "sourceId": "input-1",
+      "targetId": "sub-1"
+    },
+    {
+      "id": "e2",
+      "type": "edge",
+      "sourceId": "sub-1",
+      "targetId": "expr-1"
+    },
+    {
+      "id": "e3",
+      "type": "edge",
+      "sourceId": "expr-1",
+      "targetId": "output-1"
+    }
+  ]
+}

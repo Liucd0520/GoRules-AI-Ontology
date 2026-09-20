@@ -1,0 +1,210 @@
+{
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "inputNode",
+      "name": "请求",
+      "position": {
+        "x": 100,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "id": "table-1",
+      "type": "decisionTableNode",
+      "name": "客户年限决策表",
+      "position": {
+        "x": 420,
+        "y": 250
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "i1",
+            "name": "条件1",
+            "field": "cust.years"
+          },
+          {
+            "id": "bc595141-e912-4991-b029-21d3eb2d0da2",
+            "name": "New field",
+            "field": "cart.weight"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "o1",
+            "name": "结果",
+            "field": "result"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "i1": ">3",
+            "bc595141-e912-4991-b029-21d3eb2d0da2": "",
+            "o1": "1"
+          },
+          {
+            "_id": "487c7bb0-f902-487e-abe1-ea6366b23b2d",
+            "i1": "3",
+            "bc595141-e912-4991-b029-21d3eb2d0da2": "",
+            "o1": "0"
+          },
+          {
+            "_id": "cb6bc685-64ca-42a7-b2c5-92cbd6bc5797",
+            "i1": "<3",
+            "bc595141-e912-4991-b029-21d3eb2d0da2": "",
+            "o1": "-1"
+          }
+        ],
+        "passThrough": false,
+        "executionMode": "single"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "outputNode",
+      "name": "响应",
+      "position": {
+        "x": 1445,
+        "y": 290
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "type": "switchNode",
+      "content": {
+        "hitPolicy": "first",
+        "statements": [
+          {
+            "id": "a5044194-91bd-423d-be2b-3e73176befa4",
+            "condition": "result == 1",
+            "isDefault": false
+          },
+          {
+            "id": "1e8eb4ee-afd1-4249-9681-3a2aa80c8123",
+            "condition": "reuslt == 0",
+            "isDefault": false
+          },
+          {
+            "id": "43526e45-0f39-4803-ab6f-40547b58ad25",
+            "condition": "",
+            "isDefault": true
+          }
+        ]
+      },
+      "id": "7b35eb18-51a4-4fcb-bcd2-492d39f405b1",
+      "name": "switch1",
+      "position": {
+        "x": 755,
+        "y": 225
+      }
+    },
+    {
+      "type": "expressionNode",
+      "content": {
+        "expressions": [
+          {
+            "id": "3b3c5941-cd51-42ca-b770-b8ccb2725b3c",
+            "key": "fee",
+            "value": "1"
+          },
+          {
+            "id": "e23e3751-3fa1-4aa3-bc6a-0d2ecec036ad",
+            "key": "",
+            "value": ""
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      },
+      "id": "a854035b-6ddf-4d95-aef0-9b2627081854",
+      "name": "high_dec",
+      "position": {
+        "x": 1130,
+        "y": 180
+      }
+    },
+    {
+      "type": "expressionNode",
+      "content": {
+        "expressions": [
+          {
+            "id": "7610f771-1e9b-4f1b-96f0-aae3e534e2d8",
+            "key": "fee",
+            "value": "0"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      },
+      "id": "26a6ee23-f84a-488e-9d89-ae5ff84485fd",
+      "name": "middle_dec",
+      "position": {
+        "x": 1155,
+        "y": 355
+      }
+    },
+    {
+      "type": "expressionNode",
+      "content": {
+        "expressions": [],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single"
+      },
+      "id": "16645acd-eef2-4e41-9f51-1d043f9a0fbd",
+      "name": "no_dec",
+      "position": {
+        "x": 1150,
+        "y": 505
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "type": "edge",
+      "sourceId": "input-1",
+      "targetId": "table-1"
+    },
+    {
+      "id": "4d87b5f7-3771-4fef-b2b4-78ddc496f14a",
+      "sourceId": "table-1",
+      "type": "edge",
+      "targetId": "7b35eb18-51a4-4fcb-bcd2-492d39f405b1"
+    },
+    {
+      "id": "713c3a7a-9804-4989-9a69-d10398e8d975",
+      "sourceId": "7b35eb18-51a4-4fcb-bcd2-492d39f405b1",
+      "type": "edge",
+      "targetId": "a854035b-6ddf-4d95-aef0-9b2627081854",
+      "sourceHandle": "a5044194-91bd-423d-be2b-3e73176befa4"
+    },
+    {
+      "id": "1099578b-ab82-4fad-a29f-d6b95148a820",
+      "sourceId": "7b35eb18-51a4-4fcb-bcd2-492d39f405b1",
+      "type": "edge",
+      "targetId": "26a6ee23-f84a-488e-9d89-ae5ff84485fd",
+      "sourceHandle": "1e8eb4ee-afd1-4249-9681-3a2aa80c8123"
+    },
+    {
+      "id": "c912b3ff-02e1-4cf6-a57a-a3593cd13623",
+      "sourceId": "7b35eb18-51a4-4fcb-bcd2-492d39f405b1",
+      "type": "edge",
+      "targetId": "16645acd-eef2-4e41-9f51-1d043f9a0fbd",
+      "sourceHandle": "43526e45-0f39-4803-ab6f-40547b58ad25"
+    }
+  ]
+}

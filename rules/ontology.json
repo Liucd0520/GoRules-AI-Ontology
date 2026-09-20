@@ -1,0 +1,58 @@
+{
+  "objects": [
+    {
+      "name": "customer",
+      "label": "客户",
+      "properties": [
+        {
+          "name": "tier",
+          "label": "客户等级",
+          "type": "string",
+          "example": "vip"
+        },
+        {
+          "name": "years",
+          "label": "会员年限",
+          "type": "number",
+          "example": 3
+        },
+        {
+          "name": "monthlySpend",
+          "label": "月消费额",
+          "type": "number",
+          "example": 1500
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "label": "订单",
+      "properties": [
+        {
+          "name": "total",
+          "label": "订单金额",
+          "type": "number",
+          "example": 800
+        },
+        {
+          "name": "channel",
+          "label": "下单渠道",
+          "type": "string",
+          "example": "app"
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "label": "购物车",
+      "properties": [
+        {
+          "name": "weight",
+          "label": "包裹重量(Kg)",
+          "type": "number",
+          "example": 12
+        }
+      ]
+    }
+  ]
+}
