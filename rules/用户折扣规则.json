@@ -1,0 +1,75 @@
+{
+  "edges": [
+    {
+      "id": "e1",
+      "type": "edge",
+      "sourceId": "input-1",
+      "targetId": "table-1"
+    },
+    {
+      "id": "e2",
+      "type": "edge",
+      "sourceId": "table-1",
+      "targetId": "output-1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "inputNode",
+      "name": "请求",
+      "position": {
+        "x": 100,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    },
+    {
+      "id": "table-1",
+      "type": "decisionTableNode",
+      "name": "决策表",
+      "position": {
+        "x": 420,
+        "y": 250
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "i1",
+            "name": "条件1",
+            "field": "input.value"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "o1",
+            "name": "结果",
+            "field": "result"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "i1": "",
+            "o1": "true"
+          }
+        ]
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "outputNode",
+      "name": "响应",
+      "position": {
+        "x": 740,
+        "y": 250
+      },
+      "content": {
+        "schema": ""
+      }
+    }
+  ]
+}

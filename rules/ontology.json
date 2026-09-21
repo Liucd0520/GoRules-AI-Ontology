@@ -1,56 +1,62 @@
 {
   "objects": [
     {
-      "name": "customer",
+      "name": "Company",
+      "label": "企业",
+      "properties": [
+        {
+          "name": "alive_year",
+          "label": "企业年限",
+          "type": "number",
+          "example": 2
+        },
+        {
+          "name": "reven",
+          "label": "企业收入_万元",
+          "type": "number",
+          "example": 1200
+        },
+        {
+          "name": "addr",
+          "label": "企业地址",
+          "type": "string",
+          "example": "浦东新区"
+        }
+      ]
+    },
+    {
+      "name": "Customer",
       "label": "客户",
       "properties": [
         {
-          "name": "tier",
-          "label": "客户等级",
+          "name": "name",
+          "label": "客户名称",
           "type": "string",
-          "example": "vip"
+          "example": "字节跳动"
         },
         {
-          "name": "years",
-          "label": "会员年限",
+          "name": "id",
+          "label": "客户编号",
           "type": "number",
-          "example": 3
-        },
-        {
-          "name": "monthlySpend",
-          "label": "月消费额",
-          "type": "number",
-          "example": 1500
+          "example": "1212"
         }
       ]
     },
     {
-      "name": "order",
+      "name": "Order",
       "label": "订单",
       "properties": [
         {
-          "name": "total",
-          "label": "订单金额",
+          "name": "id",
+          "label": "订单编号",
           "type": "number",
-          "example": 800
+          "example": 12345
         },
         {
-          "name": "channel",
-          "label": "下单渠道",
-          "type": "string",
-          "example": "app"
-        }
-      ]
-    },
-    {
-      "name": "cart",
-      "label": "购物车",
-      "properties": [
-        {
-          "name": "weight",
-          "label": "包裹重量(Kg)",
+          "name": "order_amount",
+          "label": "订单金额_万元",
           "type": "number",
-          "example": 12
+          "example": 70
         }
       ]
     }

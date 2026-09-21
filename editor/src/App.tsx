@@ -215,7 +215,7 @@ const App: React.FC = () => {
     <JdmConfigProvider>
       <div className="app-shell">
         <div className="app-header">
-          <span className="app-title">规则引擎 · 决策编辑器</span>
+          <span className="app-title">本体规则智能引擎</span>
           <select value={current} onChange={(e) => openFile(e.target.value)}>
             {files.map((f) => (
               <option key={f.name} value={f.name}>
@@ -230,10 +230,10 @@ const App: React.FC = () => {
           <button className="danger" onClick={deleteFile} disabled={!current}>
             删除
           </button>
-          <button className="primary ai-entry" onClick={() => setAiOpen(true)}>
+          <button className="primary ai-entry" onClick={() => { setAiOpen(true); setOntoOpen(false); }}>
             <RocketOutlined /> AI 助手
           </button>
-          <button className="primary onto-entry" onClick={() => setOntoOpen(true)}>
+          <button className="primary onto-entry" onClick={() => { setOntoOpen(true); setAiOpen(false); }}>
             <DatabaseOutlined /> 变量本体
           </button>
           <div className="mode-switch">
